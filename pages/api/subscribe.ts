@@ -24,7 +24,7 @@ export default async function handler(
     }
 
     const { data, error } = await supabase
-      .from('workshops')
+      .from('workshop')
       .insert([{ name, workshop }]);
 
     if (error) {
