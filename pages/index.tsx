@@ -11,6 +11,7 @@ const workshops = [
 
 const Home = () => {
   const [name, setName] = useState('');
+  const [phone, setPhone] = useState('');
   const [message, setMessage] = useState('');
   const [expandedWorkshop, setExpandedWorkshop] = useState<string | null>(null);
   const toast = useToast();
@@ -25,24 +26,27 @@ const Home = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ name, workshop }),
+        body: JSON.stringify({ name, phone, workshop }),
       });
+
+      const result = await response.json();
 
       if (response.ok) {
         setMessage('Inscrição confirmada, obrigado por se inscrever!');
         setName('');
+        setPhone('');
         toast({
           title: 'Success',
-          description: 'Inscrição confirmada!',
+          description: 'Subscription confirmed!',
           status: 'success',
           duration: 5000,
           isClosable: true,
         });
       } else {
-        setMessage('Failed to confirm subscription.');
+        setMessage(result.error || 'Failed to confirm subscription.');
         toast({
           title: 'Error',
-          description: 'Falha ao tentar se inscrever.',
+          description: result.error || 'Failed to confirm subscription.',
           status: 'error',
           duration: 5000,
           isClosable: true,
@@ -52,7 +56,7 @@ const Home = () => {
       setMessage('An error occurred. Please try again.');
       toast({
         title: 'Error',
-        description: 'Um erro ocorreu. Por favor, tente de novo.',
+        description: 'An error occurred. Please try again.',
         status: 'error',
         duration: 5000,
         isClosable: true,
@@ -77,7 +81,7 @@ const Home = () => {
         {workshops.map((workshop) => (
           <Box key={workshop.name} mb={8}>
             <Flex align="center" justify="space-between" onClick={() => toggleWorkshop(workshop.name)} cursor="pointer">
-              <Text fontSize={["md", "lg"]} fontWeight="bold" color="brand.200" fontFamily="'Pages Grotesque', sans-serif">
+              <Text fontSize={["md", "lg"]} color="brand.200" fontFamily="'Pages Grotesque', sans-serif">
                 {workshop.name}
               </Text>
               <IconButton
@@ -87,8 +91,8 @@ const Home = () => {
                 onClick={() => toggleWorkshop(workshop.name)}
               />
             </Flex>
-            <Text fontSize={["xs", "sm"]} mt={-1} color="#414141" fontWeight="light" fontFamily="'Pages Grotesque', sans-serif">
-                com {workshop.author}
+            <Text fontSize={["xs", "sm"]} textAlign="start" color="#414141" fontWeight="light" fontFamily="'Pages Grotesque', sans-serif">
+              com {workshop.author}
             </Text>
             <Collapse in={expandedWorkshop === workshop.name} animateOpacity>
               <form onSubmit={(e) => handleSubmit(e, workshop.workshop)}>
@@ -98,6 +102,22 @@ const Home = () => {
                     placeholder="nome do participante"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
+                    required
+                    focusBorderColor="black"
+                    _placeholder={{ color: '#414141' }}
+                    border="1px solid"
+                    borderColor="#414141"
+                    fontFamily="'Pages Grotesque', sans-serif"
+                    borderRadius="0"
+                    color="#414141"
+                  />
+                </Box>
+                <Box mb={4} mt={4}>
+                  <Input
+                    type="tel"
+                    placeholder="telefone"
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
                     required
                     focusBorderColor="black"
                     _placeholder={{ color: '#414141' }}
