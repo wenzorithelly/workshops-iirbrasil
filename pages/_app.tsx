@@ -1,8 +1,7 @@
 // pages/_app.tsx
 import { ChakraProvider } from '@chakra-ui/react';
-import type { AppProps } from 'next/app';
-import theme from '../theme'; // Import your custom theme
-import '../src/app/globals.css'; // Import the global CSS
+import { AppProps } from 'next/app';
+import theme from '../theme';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (

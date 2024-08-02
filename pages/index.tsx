@@ -1,23 +1,31 @@
 // pages/index.tsx
 import React, { useState } from 'react';
-import { Box, Button, Flex, Input, Text, useToast, Image, Link, List, ListItem } from '@chakra-ui/react';
+import { Box, Button, Flex, Input, Text, useToast, Collapse, IconButton } from '@chakra-ui/react';
+import { ChevronDownIcon, ChevronUpIcon } from '@chakra-ui/icons';
+
+const workshops = [
+  { name: 'Bel: Criando um Altar de Adoração na Família', workshop: 'Criando um Altar de Adoração na Família' },
+  { name: 'João: Emoções Transformadas pela Adoração', workshop: 'Emoções Transformadas pela Adoração' },
+  { name: 'Leticia: Sobrenatural Através da Adoração', workshop: 'Sobrenatural Através da Adoração' },
+];
 
 const Home = () => {
   const [name, setName] = useState('');
   const [message, setMessage] = useState('');
+  const [expandedWorkshop, setExpandedWorkshop] = useState<string | null>(null);
   const toast = useToast();
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>, endpoint: string) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>, workshop: string) => {
     e.preventDefault();
     setMessage('');
 
     try {
-      const response = await fetch(endpoint, {
+      const response = await fetch('/api/subscribe', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ name }),
+        body: JSON.stringify({ name, workshop }),
       });
 
       if (response.ok) {
@@ -52,6 +60,10 @@ const Home = () => {
     }
   };
 
+  const toggleWorkshop = (workshop: string) => {
+    setExpandedWorkshop(expandedWorkshop === workshop ? null : workshop);
+  };
+
   return (
     <Flex minH="100vh" align="center" justify="center" p={[4, 8]} bg="brand.100" direction="column">
       <Box p={[4, 8]} w="full" maxW="md" bg="transparent">
@@ -62,113 +74,56 @@ const Home = () => {
           - Sábado 10hrs -
         </Text>
 
-        <form onSubmit={(e) => handleSubmit(e, '/api/bel')}>
-          <Text fontSize={["md", "lg"]} mb={4} textAlign="center" color="brand.200" fontFamily="'Pages Grotesque', sans-serif">
-            Bel: Criando um Altar de Adoração na Família
-          </Text>
-          <Box mb={4}>
-            <Input
-              type="text"
-              placeholder="nome do participante"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              required
-              focusBorderColor="black"
-              _placeholder={{ color: '#414141' }}
-              border="1px solid"
-              borderColor="#414141"
-              fontFamily="'Pages Grotesque', sans-serif"
-              borderRadius="0"
-              color="#414141"
-            />
+        {workshops.map((workshop) => (
+          <Box key={workshop.name} mb={8}>
+            <Flex align="center" justify="space-between" onClick={() => toggleWorkshop(workshop.name)} cursor="pointer">
+              <Text fontSize={["md", "lg"]} color="brand.200" fontFamily="'Pages Grotesque', sans-serif">
+                {workshop.name}
+              </Text>
+              <IconButton
+                icon={expandedWorkshop === workshop.name ? <ChevronUpIcon /> : <ChevronDownIcon />}
+                aria-label="Toggle workshop"
+                variant="ghost"
+                onClick={() => toggleWorkshop(workshop.name)}
+              />
+            </Flex>
+            <Collapse in={expandedWorkshop === workshop.name} animateOpacity>
+              <form onSubmit={(e) => handleSubmit(e, workshop.workshop)}>
+                <Box mb={4} mt={4}>
+                  <Input
+                    type="text"
+                    placeholder="nome do participante"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    required
+                    focusBorderColor="black"
+                    _placeholder={{ color: '#414141' }}
+                    border="1px solid"
+                    borderColor="#414141"
+                    fontFamily="'Pages Grotesque', sans-serif"
+                    borderRadius="0"
+                    color="#414141"
+                  />
+                </Box>
+                <Button
+                  type="submit"
+                  bg="brand.200"
+                  color="#414141"
+                  width="full"
+                  _hover={{ bg: 'white', transform: 'translateY(-1px)', boxShadow: 'lg' }}
+                  transition="all 0.3s ease-in-out"
+                  border="1px solid"
+                  borderColor="brand.200"
+                  borderRadius="0"
+                  fontFamily="'Pages Grotesque', sans-serif"
+                >
+                  Inscrever-se
+                </Button>
+              </form>
+            </Collapse>
           </Box>
-          <Button
-            type="submit"
-            bg="brand.200"
-            color="#414141"
-            width="full"
-            _hover={{ bg: 'white', transform: 'translateY(-1px)', boxShadow: 'lg' }}
-            transition="all 0.3s ease-in-out"
-            border="1px solid"
-            borderColor="brand.200"
-            borderRadius="0"
-            fontFamily="'Pages Grotesque', sans-serif"
-          >
-            Inscrever-se
-          </Button>
-        </form>
+        ))}
 
-        <form onSubmit={(e) => handleSubmit(e, '/api/joao')}>
-          <Text fontSize={["md", "lg"]} mt={8} mb={4} textAlign="center" color="brand.200" fontFamily="'Pages Grotesque', sans-serif">
-            João: Emoções Transformadas pela Adoração
-          </Text>
-          <Box mb={4}>
-            <Input
-              type="text"
-              placeholder="nome do participante"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              required
-              focusBorderColor="black"
-              _placeholder={{ color: '#414141' }}
-              border="1px solid"
-              borderColor="#414141"
-              fontFamily="'Pages Grotesque', sans-serif"
-              borderRadius="0"
-              color="#414141"
-            />
-          </Box>
-          <Button
-            type="submit"
-            bg="brand.200"
-            color="#414141"
-            width="full"
-            _hover={{ bg: 'white', transform: 'translateY(-1px)', boxShadow: 'lg' }}
-            transition="all 0.3s ease-in-out"
-            border="1px solid"
-            borderColor="brand.200"
-            borderRadius="0"
-            fontFamily="'Pages Grotesque', sans-serif"
-          >
-            Inscrever-se
-          </Button>
-        </form>
-
-        <form onSubmit={(e) => handleSubmit(e, '/api/leticia')}>
-          <Text fontSize={["md", "lg"]} mt={8} mb={4} textAlign="center" color="brand.200" fontFamily="'Pages Grotesque', sans-serif">
-            Leticia: Sobrenatural Através da Adoração
-          </Text>
-          <Box mb={4}>
-            <Input
-              type="text"
-              placeholder="nome do participante"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              required
-              focusBorderColor="black"
-              _placeholder={{ color: '#414141' }}
-              border="1px solid"
-              borderColor="#414141"
-              fontFamily="'Pages Grotesque', sans-serif"
-              borderRadius="0"
-              color="#414141"
-            />
-          </Box>
-          <Button
-            type="submit"
-            bg="brand.200"
-            color="#414141"
-            width="full"
-            _hover={{ bg: 'white', transform: 'translateY(-1px)', boxShadow: 'lg' }}
-            transition="all 0.3s ease-in-out"
-            border="1px solid"
-            borderColor="brand.200"
-            borderRadius="0"
-            fontFamily="'Pages Grotesque', sans-serif"
-          >
-            Inscrever-se
-          </Button>
-        </form>
         {message && (
           <Text mt={4} textAlign="center" color={message.includes('confirmada') ? 'brand.300' : 'brand.400'}>
             {message}

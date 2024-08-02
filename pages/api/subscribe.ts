@@ -1,3 +1,4 @@
+// pages/api/subscribe.ts
 import { NextApiRequest, NextApiResponse } from 'next';
 import { createClient } from '@supabase/supabase-js';
 
@@ -6,21 +7,25 @@ const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 type Data = {
-  data?: { name: string }[] | null;
+  data?: { name: string; workshop: string }[] | null;
   error?: string;
   message?: string;
-}
+};
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
   if (req.method === 'POST') {
-    const { name } = req.body;
+    const { name, workshop } = req.body;
+
+    if (!name || !workshop) {
+      return res.status(400).json({ error: 'Name and workshop are required' });
+    }
 
     const { data, error } = await supabase
-      .from('rsvps')
-      .insert([{ name }]);
+      .from('workshops')
+      .insert([{ name, workshop }]);
 
     if (error) {
       return res.status(500).json({ error: error.message });
