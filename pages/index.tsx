@@ -4,9 +4,9 @@ import { Box, Button, Flex, Input, Text, useToast, Collapse, IconButton } from '
 import { ChevronDownIcon, ChevronUpIcon } from '@chakra-ui/icons';
 
 const workshops = [
-  { name: 'Bel: Criando um Altar de Adoração na Família', workshop: 'Criando um Altar de Adoração na Família' },
-  { name: 'João: Emoções Transformadas pela Adoração', workshop: 'Emoções Transformadas pela Adoração' },
-  { name: 'Leticia: Sobrenatural Através da Adoração', workshop: 'Sobrenatural Através da Adoração' },
+  { name: 'Criando um Altar de Adoração na Família', author: "Izabel Arrais", workshop: 'Criando um Altar de Adoração na Família' },
+  { name: 'Emoções Transformadas pela Adoração', author: "João Marcos", workshop: 'Emoções Transformadas pela Adoração' },
+  { name: 'Sobrenatural Através da Adoração', author: "Letícia Bourdon", workshop: 'Sobrenatural Através da Adoração' },
 ];
 
 const Home = () => {
@@ -33,7 +33,7 @@ const Home = () => {
         setName('');
         toast({
           title: 'Success',
-          description: 'Subscription confirmed!',
+          description: 'Inscrição confirmada!',
           status: 'success',
           duration: 5000,
           isClosable: true,
@@ -42,7 +42,7 @@ const Home = () => {
         setMessage('Failed to confirm subscription.');
         toast({
           title: 'Error',
-          description: 'Failed to confirm subscription.',
+          description: 'Falha ao tentar se inscrever.',
           status: 'error',
           duration: 5000,
           isClosable: true,
@@ -52,7 +52,7 @@ const Home = () => {
       setMessage('An error occurred. Please try again.');
       toast({
         title: 'Error',
-        description: 'An error occurred. Please try again.',
+        description: 'Um erro ocorreu. Por favor, tente de novo.',
         status: 'error',
         duration: 5000,
         isClosable: true,
@@ -70,14 +70,14 @@ const Home = () => {
         <Text fontSize={["2xl", "4xl"]} mt={6} mb={-1} textAlign="center" fontWeight="bold" color="brand.200" fontFamily="'Black Mango', sans-serif">
           Workshops
         </Text>
-        <Text fontSize={["xs", "sm"]} mb={10} textAlign="center" color="#414141" fontWeight="light">
-          - Sábado 10hrs -
+        <Text fontSize={["sm", "md"]} mb={10} textAlign="center" color="#414141" fontFamily="'Pages Grotesque', sans-serif">
+          - Sábado às 10hrs -
         </Text>
 
         {workshops.map((workshop) => (
           <Box key={workshop.name} mb={8}>
             <Flex align="center" justify="space-between" onClick={() => toggleWorkshop(workshop.name)} cursor="pointer">
-              <Text fontSize={["md", "lg"]} color="brand.200" fontFamily="'Pages Grotesque', sans-serif">
+              <Text fontSize={["md", "lg"]} fontWeight="bold" color="brand.200" fontFamily="'Pages Grotesque', sans-serif">
                 {workshop.name}
               </Text>
               <IconButton
@@ -87,6 +87,9 @@ const Home = () => {
                 onClick={() => toggleWorkshop(workshop.name)}
               />
             </Flex>
+            <Text fontSize={["xs", "sm"]} mt={-1} color="#414141" fontWeight="light" fontFamily="'Pages Grotesque', sans-serif">
+                com {workshop.author}
+            </Text>
             <Collapse in={expandedWorkshop === workshop.name} animateOpacity>
               <form onSubmit={(e) => handleSubmit(e, workshop.workshop)}>
                 <Box mb={4} mt={4}>
