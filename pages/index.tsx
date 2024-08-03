@@ -141,7 +141,7 @@ const Home = () => {
                   <Box mb={4} mt={4}>
                     <Input
                       type="tel"
-                      placeholder="telefone"
+                      placeholder="(00) 0000-0000"
                       value={phone}
                       onChange={(e) => setPhone(e.target.value)}
                       required
