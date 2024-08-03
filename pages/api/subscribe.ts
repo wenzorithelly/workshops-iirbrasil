@@ -37,6 +37,24 @@ export default async function handler(
       return res.status(400).json({ error: 'Você já está inscrito em um curso.' });
     }
 
+    // Check the number of subscriptions for the workshop
+    const { count: workshopCount, error: countError } = await supabase
+      .from('workshop')
+      .select('id', { count: 'exact', head: true })
+      .eq('workshop', workshop);
+
+    if (countError) {
+      return res.status(500).json({ error: countError.message });
+    }
+
+    // Determine the limit for each workshop
+    const workshopLimit = workshop === 'Sobrenatural Através da Adoração' ? 100 : 40;
+    const actualWorkshopCount = workshopCount === null ? 0 : workshopCount;
+
+    if (actualWorkshopCount >= workshopLimit) {
+      return res.status(400).json({ error: 'As vagas para esse workshop foram encerradas.' });
+    }
+
     const { data, error } = await supabase
       .from('workshop')
       .insert([{ name, phone, workshop }]);

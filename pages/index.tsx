@@ -1,12 +1,12 @@
 // pages/index.tsx
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Box, Button, Flex, Input, Text, useToast, Collapse, IconButton } from '@chakra-ui/react';
 import { ChevronDownIcon, ChevronUpIcon } from '@chakra-ui/icons';
 
 const workshops = [
-  { name: 'Criando um Altar de Adoração na Família', author: "Izabel Arrais", workshop: 'Criando um Altar de Adoração na Família' },
-  { name: 'Emoções Transformadas pela Adoração', author: "João Marcos", workshop: 'Emoções Transformadas pela Adoração' },
-  { name: 'Sobrenatural Através da Adoração', author: "Letícia Bourdon", workshop: 'Sobrenatural Através da Adoração' },
+  { name: 'Bel: Criando um Altar de Adoração na Família', workshop: 'Criando um Altar de Adoração na Família' },
+  { name: 'João: Emoções Transformadas pela Adoração', workshop: 'Emoções Transformadas pela Adoração' },
+  { name: 'Leticia: Sobrenatural Através da Adoração', workshop: 'Sobrenatural Através da Adoração' },
 ];
 
 const Home = () => {
@@ -14,7 +14,28 @@ const Home = () => {
   const [phone, setPhone] = useState('');
   const [message, setMessage] = useState('');
   const [expandedWorkshop, setExpandedWorkshop] = useState<string | null>(null);
+  const [workshopLimits, setWorkshopLimits] = useState<Record<string, boolean>>({});
   const toast = useToast();
+
+  useEffect(() => {
+    const fetchWorkshopCounts = async () => {
+      const responses = await Promise.all(workshops.map(async (workshop) => {
+        const response = await fetch(`/api/workshop-count?workshop=${workshop.workshop}`);
+        const result = await response.json();
+        return { workshop: workshop.workshop, count: result.count };
+      }));
+
+      const limits = responses.reduce((acc, { workshop, count }) => {
+        const limit = workshop === 'Sobrenatural Através da Adoração' ? 100 : 40;
+        acc[workshop] = count >= limit;
+        return acc;
+      }, {} as Record<string, boolean>);
+
+      setWorkshopLimits(limits);
+    };
+
+    fetchWorkshopCounts();
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>, workshop: string) => {
     e.preventDefault();
@@ -74,8 +95,8 @@ const Home = () => {
         <Text fontSize={["2xl", "4xl"]} mt={6} mb={-1} textAlign="center" fontWeight="bold" color="brand.200" fontFamily="'Black Mango', sans-serif">
           Workshops
         </Text>
-        <Text fontSize={["sm", "md"]} mb={10} textAlign="center" color="#414141" fontFamily="'Pages Grotesque', sans-serif">
-          - Sábado às 10hrs -
+        <Text fontSize={["xs", "sm"]} mb={10} textAlign="center" color="#414141" fontWeight="light">
+          - Sábado 10hrs -
         </Text>
 
         {workshops.map((workshop) => (
@@ -91,67 +112,64 @@ const Home = () => {
                 onClick={() => toggleWorkshop(workshop.name)}
               />
             </Flex>
-            <Text fontSize={["xs", "sm"]} textAlign="start" color="#414141" fontWeight="light" fontFamily="'Pages Grotesque', sans-serif">
-              com {workshop.author}
-            </Text>
             <Collapse in={expandedWorkshop === workshop.name} animateOpacity>
-              <form onSubmit={(e) => handleSubmit(e, workshop.workshop)}>
-                <Box mb={4} mt={4}>
-                  <Input
-                    type="text"
-                    placeholder="nome do participante"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    required
-                    focusBorderColor="black"
-                    _placeholder={{ color: '#414141' }}
-                    border="1px solid"
-                    borderColor="#414141"
-                    fontFamily="'Pages Grotesque', sans-serif"
-                    borderRadius="0"
+              {workshopLimits[workshop.workshop] ? (
+                <Text mt={4} textAlign="center" color="brand.400">
+                  As vagas para esse workshop acabaram.
+                </Text>
+              ) : (
+                <form onSubmit={(e) => handleSubmit(e, workshop.workshop)}>
+                  <Box mb={4} mt={4}>
+                    <Input
+                      type="text"
+                      placeholder="nome do participante"
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      required
+                      focusBorderColor="black"
+                      _placeholder={{ color: '#414141' }}
+                      border="1px solid"
+                      borderColor="#414141"
+                      fontFamily="'Pages Grotesque', sans-serif"
+                      borderRadius="0"
+                      color="#414141"
+                    />
+                  </Box>
+                  <Box mb={4} mt={4}>
+                    <Input
+                      type="tel"
+                      placeholder="telefone"
+                      value={phone}
+                      onChange={(e) => setPhone(e.target.value)}
+                      required
+                      focusBorderColor="black"
+                      _placeholder={{ color: '#414141' }}
+                      border="1px solid"
+                      borderColor="#414141"
+                      borderRadius="0"
+                      color="#414141"
+                    />
+                  </Box>
+                  <Button
+                    type="submit"
+                    bg="brand.200"
                     color="#414141"
-                  />
-                </Box>
-                <Box mb={4} mt={4}>
-                  <Input
-                    type="tel"
-                    placeholder="telefone"
-                    value={phone}
-                    onChange={(e) => setPhone(e.target.value)}
-                    required
-                    focusBorderColor="black"
-                    _placeholder={{ color: '#414141' }}
+                    width="full"
+                    _hover={{ bg: 'white', transform: 'translateY(-1px)', boxShadow: 'lg' }}
+                    transition="all 0.3s ease-in-out"
                     border="1px solid"
-                    borderColor="#414141"
-                    fontFamily="'Pages Grotesque', sans-serif"
+                    borderColor="brand.200"
                     borderRadius="0"
-                    color="#414141"
-                  />
-                </Box>
-                <Button
-                  type="submit"
-                  bg="brand.200"
-                  color="#414141"
-                  width="full"
-                  _hover={{ bg: 'white', transform: 'translateY(-1px)', boxShadow: 'lg' }}
-                  transition="all 0.3s ease-in-out"
-                  border="1px solid"
-                  borderColor="brand.200"
-                  borderRadius="0"
-                  fontFamily="'Pages Grotesque', sans-serif"
-                >
-                  Inscrever-se
-                </Button>
-              </form>
+                    fontFamily="'Pages Grotesque', sans-serif"
+                  >
+                    Inscrever-se
+                  </Button>
+                </form>
+              )}
             </Collapse>
           </Box>
         ))}
-
-        {message && (
-          <Text mt={4} textAlign="center" color={message.includes('confirmada') ? 'brand.300' : 'brand.400'}>
-            {message}
-          </Text>
-        )}
+        )
       </Box>
     </Flex>
   );
