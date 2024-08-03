@@ -4,9 +4,9 @@ import { Box, Button, Flex, Input, Text, useToast, Collapse, IconButton } from '
 import { ChevronDownIcon, ChevronUpIcon } from '@chakra-ui/icons';
 
 const workshops = [
-  { name: 'Bel: Criando um Altar de Adoração na Família', workshop: 'Criando um Altar de Adoração na Família' },
-  { name: 'João: Emoções Transformadas pela Adoração', workshop: 'Emoções Transformadas pela Adoração' },
-  { name: 'Leticia: Sobrenatural Através da Adoração', workshop: 'Sobrenatural Através da Adoração' },
+  { name: 'Criando um Altar de Adoração na Família', author: "Isabel Arrais", workshop: 'Criando um Altar de Adoração na Família' },
+  { name: 'Emoções Transformadas pela Adoração', author: "João Marcos", workshop: 'Emoções Transformadas pela Adoração' },
+  { name: 'Sobrenatural Através da Adoração', author: "Letícia Bourdon", workshop: 'Sobrenatural Através da Adoração' },
 ];
 
 const Home = () => {
@@ -95,7 +95,7 @@ const Home = () => {
         <Text fontSize={["2xl", "4xl"]} mt={6} mb={-1} textAlign="center" fontWeight="bold" color="brand.200" fontFamily="'Black Mango', sans-serif">
           Workshops
         </Text>
-        <Text fontSize={["xs", "sm"]} mb={10} textAlign="center" color="#414141" fontWeight="light">
+        <Text fontSize={["sm", "md"]} mb={10} textAlign="center" color="#414141" fontFamily="'Pages Grotesque', sans-serif">
           - Sábado 10hrs -
         </Text>
 
@@ -112,6 +112,9 @@ const Home = () => {
                 onClick={() => toggleWorkshop(workshop.name)}
               />
             </Flex>
+            <Text fontSize={["xs", "sm"]} mb={0} textAlign="start" color="#414141" fontWeight="light" fontFamily="'Pages Grotesque', sans-serif">
+              com {workshop.author}
+            </Text>
             <Collapse in={expandedWorkshop === workshop.name} animateOpacity>
               {workshopLimits[workshop.workshop] ? (
                 <Text mt={4} textAlign="center" color="brand.400">
