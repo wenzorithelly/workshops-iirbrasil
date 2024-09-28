@@ -171,12 +171,12 @@ const Home = () => {
                     bg="#5818c8"
                     color="white"
                     width="full"
-                    _hover={{ bg: 'white', transform: 'translateY(-1px)', boxShadow: 'lg' }}
+                    _hover={{ bg: '#5818c8', transform: 'translateY(-1px)', boxShadow: 'lg' }}
                     transition="all 0.3s ease-in-out"
                     border="1px solid"
-                    borderColor="brand.200"
+                    borderColor="#5818c8"
                     borderRadius="15px"
-                    fontFamily="'Pages Grotesque', sans-serif"
+                    fontFamily="Antonio"
                   >
                     Inscrever-se
                   </Button>
