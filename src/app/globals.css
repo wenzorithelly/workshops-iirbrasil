@@ -18,12 +18,14 @@
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
+  background: 
+    linear-gradient(
       to bottom,
       transparent,
       rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+    ),
+    url('/bg.png') no-repeat center center fixed;
+  background-size: cover;
 }
 
 @layer utilities {
@@ -66,8 +68,4 @@ body {
   src: url('/fonts/magnate.otf') format('opentype');
   font-weight: normal;
   font-style: normal;
-}
-
-body {
-  font-family: 'Black Mango', sans-serif;
 }
