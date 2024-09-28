@@ -45,7 +45,7 @@ body {
 
 @font-face {
   font-family: 'Anton';
-  src: url('/fonts/Anton-regular.ttf') format('opentype');
+  src: url('/fonts/Anton-Regular.ttf') format('opentype');
   font-weight: normal;
   font-style: normal;
 }
