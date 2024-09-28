@@ -48,7 +48,7 @@ export default async function handler(
     }
 
     // Determine the limit for each workshop
-    const workshopLimit = workshop === 'Pureza Clara mendes' ? 35 : 40;
+    const workshopLimit = workshop === 'Pureza' ? 35 : 40;
     const actualWorkshopCount = workshopCount === null ? 0 : workshopCount;
 
     if (actualWorkshopCount >= workshopLimit) {

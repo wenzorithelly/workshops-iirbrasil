@@ -4,8 +4,8 @@ import { Box, Button, Flex, Input, Text, useToast, Collapse, IconButton } from '
 import { ChevronDownIcon, ChevronUpIcon } from '@chakra-ui/icons';
 
 const workshops = [
-  { name: 'Pureza Clara mendes', author: 'Clara Mendes', workshop: 'Pureza Clara mendes' },
-  { name: 'Evangelismo João Paulo', author: 'João Paulo', workshop: 'Evangelismo João Paulo' },
+  { name: 'Pureza', author: 'Clara Mendes', workshop: 'Pureza' },
+  { name: 'Evangelismo', author: 'João Paulo', workshop: 'Evangelismo' },
 ];
   
 
@@ -26,7 +26,7 @@ const Home = () => {
       }));
 
       const limits = responses.reduce((acc, { workshop, count }) => {
-        const limit = workshop === 'pureza Clara mendes' ? 35 : 40;
+        const limit = workshop === 'Pureza' ? 35 : 40;
         acc[workshop] = count >= limit;
         return acc;
       }, {} as Record<string, boolean>);
@@ -90,8 +90,21 @@ const Home = () => {
   };
 
   return (
-    <Flex minH="100vh" align="center" justify="center" p={[4, 8]} bg="brand.100" direction="column">
-      <Box p={[4, 8]} w="full" maxW="md" bg="transparent">
+    <Flex
+      minH="100vh"
+      align="center"
+      justify="center"
+      p={[4, 8]}
+      /* 🟢 **Alteração: Adicionando imagem de fundo** */
+      bgImage="url('/bg.png')"
+      bgSize="cover"
+      bgPosition="center"
+      bgRepeat="no-repeat"
+      /* 🟢 **Opção: Ajustando a cor de fundo** */
+      bg="brand.100" // Você pode remover ou ajustar essa linha se desejar
+      direction="column"
+    >
+      <Box p={[4, 8]} w="full" maxW="md" bg="rgba(255, 255, 255, 0.8)" borderRadius="md" boxShadow="lg">
         <Text fontSize={["2xl", "4xl"]} mt={6} mb={-1} textAlign="center" fontWeight="bold" color="brand.200" fontFamily="'Black Mango', sans-serif">
           Workshops
         </Text>
@@ -172,10 +185,15 @@ const Home = () => {
             </Collapse>
           </Box>
         ))}
-        )
       </Box>
     </Flex>
   );
 };
 
 export default Home;
+
+
+//     font-size: 40px;
+//     font-family: sans-serif;
+//     text-transform: uppercase;
+// .css-1ofqbo3 
