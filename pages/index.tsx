@@ -4,10 +4,10 @@ import { Box, Button, Flex, Input, Text, useToast, Collapse, IconButton } from '
 import { ChevronDownIcon, ChevronUpIcon } from '@chakra-ui/icons';
 
 const workshops = [
-  { name: 'Criando um Altar de Adoração na Família', author: "Isabel Arrais", workshop: 'Criando um Altar de Adoração na Família' },
-  { name: 'Emoções Transformadas pela Adoração', author: "João Marcos", workshop: 'Emoções Transformadas pela Adoração' },
-  { name: 'Sobrenatural Através da Adoração', author: "Letícia Bourdon", workshop: 'Sobrenatural Através da Adoração' },
+  { name: 'Pureza Clara mendes', author: 'Clara Mendes', workshop: 'Pureza Clara mendes' },
+  { name: 'Evangelismo João Paulo', author: 'João Paulo', workshop: 'Evangelismo João Paulo' },
 ];
+  
 
 const Home = () => {
   const [name, setName] = useState('');
@@ -26,7 +26,7 @@ const Home = () => {
       }));
 
       const limits = responses.reduce((acc, { workshop, count }) => {
-        const limit = workshop === 'Sobrenatural Através da Adoração' ? 100 : 40;
+        const limit = workshop === 'pureza Clara mendes' ? 35 : 40;
         acc[workshop] = count >= limit;
         return acc;
       }, {} as Record<string, boolean>);
