@@ -93,7 +93,7 @@ const Home = () => {
     <Flex minH="100vh" align="center" justify="center" p={[4, 8]} bgImage="url('/bg.png')" bgSize="cover" bgPosition="center" bgRepeat="no-repeat" direction="column">
       <Box p={[4, 8]} w="full" maxW="md" bg="transparent">
         <Text 
-          fontSize={["6xl"]}
+          fontSize={["5xl"]}
           mt={6}
           mb={-1}
           fontFamily="'Anton'"
