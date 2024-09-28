@@ -32,10 +32,24 @@ body {
   }
 }
 
+
 /* src/app/globals.css */
 @font-face {
   font-family: 'Black Mango';
   src: url('/fonts/black-mango-regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Anton';
+  src: url('/fonts/Anton-regular.ttf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Antonio';
+  src: url('/fonts/Antonio.ttf') format('opentype');
   font-weight: normal;
   font-style: normal;
 }

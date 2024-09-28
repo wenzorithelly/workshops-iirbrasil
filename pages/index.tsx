@@ -90,32 +90,31 @@ const Home = () => {
   };
 
   return (
-    <Flex
-      minH="100vh"
-      align="center"
-      justify="center"
-      p={[4, 8]}
-      /* 🟢 **Alteração: Adicionando imagem de fundo** */
-      bgImage="url('/bg.png')"
-      bgSize="cover"
-      bgPosition="center"
-      bgRepeat="no-repeat"
-      /* 🟢 **Opção: Ajustando a cor de fundo** */
-      bg="brand.100" // Você pode remover ou ajustar essa linha se desejar
-      direction="column"
-    >
-      <Box p={[4, 8]} w="full" maxW="md" bg="rgba(255, 255, 255, 0.8)" borderRadius="md" boxShadow="lg">
-        <Text fontSize={["2xl", "4xl"]} mt={6} mb={-1} textAlign="center" fontWeight="bold" color="brand.200" fontFamily="'Black Mango', sans-serif">
-          Workshops
+    <Flex minH="100vh" align="center" justify="center" p={[4, 8]} bgImage="url('/bg.png')" bgSize="cover" bgPosition="center" bgRepeat="no-repeat" direction="column">
+      <Box p={[4, 8]} w="full" maxW="md" bg="transparent">
+        <Text 
+          fontSize={["6xl"]}
+          mt={6}
+          mb={-1}
+          fontFamily="'Anton'"
+          textAlign="center"
+          color="white"
+          sx={{
+            WebkitTextStroke: '1px black', 
+          }}
+        >
+          WORKSHOPS
         </Text>
-        <Text fontSize={["sm", "md"]} mb={10} textAlign="center" color="#414141" fontFamily="'Pages Grotesque', sans-serif">
-          - Sábado 10hrs -
+        <Text fontSize={["md"]} mb={10} textAlign="center" color="#380c86" fontFamily="'Antonio', sans-serif">
+          SÁBADO 18:30h
         </Text>
 
         {workshops.map((workshop) => (
-          <Box key={workshop.name} mb={8}>
+          <Box border="1px solid" color="#ffffff59" borderRadius="15px" padding="10px" key={workshop.name} mb={8}>
             <Flex align="center" justify="space-between" onClick={() => toggleWorkshop(workshop.name)} cursor="pointer">
-              <Text fontSize={["md", "lg"]} color="brand.200" fontFamily="'Pages Grotesque', sans-serif">
+              <Text fontSize={["2xl"]} letterSpacing="1.3px" textTransform="uppercase" color="white" fontFamily="Anton" sx={{
+            WebkitTextStroke: '0.5px black',
+          }}>
                 {workshop.name}
               </Text>
               <IconButton
@@ -125,12 +124,12 @@ const Home = () => {
                 onClick={() => toggleWorkshop(workshop.name)}
               />
             </Flex>
-            <Text fontSize={["xs", "sm"]} mb={0} textAlign="start" color="#414141" fontWeight="light" fontFamily="'Pages Grotesque', sans-serif">
+            <Text fontSize={["xs", "sm"]} mb={0} textAlign="start" color="#5818c8" fontWeight="light" fontFamily="Antonio">
               com {workshop.author}
             </Text>
             <Collapse in={expandedWorkshop === workshop.name} animateOpacity>
               {workshopLimits[workshop.workshop] ? (
-                <Text mt={4} textAlign="center" color="brand.400">
+                <Text mt={4} textAlign="center" fontFamily="Anton" color="white">
                   As vagas para esse workshop acabaram.
                 </Text>
               ) : (
@@ -143,12 +142,12 @@ const Home = () => {
                       onChange={(e) => setName(e.target.value)}
                       required
                       focusBorderColor="black"
-                      _placeholder={{ color: '#414141' }}
+                      _placeholder={{ color: '#5818c8' }}
                       border="1px solid"
-                      borderColor="#414141"
-                      fontFamily="'Pages Grotesque', sans-serif"
-                      borderRadius="0"
-                      color="#414141"
+                      borderRadius="15px"
+                      borderColor="#5818c8"
+                      fontFamily="Antonio"
+                      color="#5818c8"
                     />
                   </Box>
                   <Box mb={4} mt={4}>
@@ -159,23 +158,24 @@ const Home = () => {
                       onChange={(e) => setPhone(e.target.value)}
                       required
                       focusBorderColor="black"
-                      _placeholder={{ color: '#414141' }}
+                      _placeholder={{ color: '#5818c8' }}
                       border="1px solid"
-                      borderColor="#414141"
-                      borderRadius="0"
-                      color="#414141"
+                      borderColor="#5818c8"
+                      borderRadius="15px"
+                      fontFamily="Antonio"
+                      color="#5818c8"
                     />
                   </Box>
                   <Button
                     type="submit"
-                    bg="brand.200"
-                    color="#414141"
+                    bg="#5818c8"
+                    color="white"
                     width="full"
                     _hover={{ bg: 'white', transform: 'translateY(-1px)', boxShadow: 'lg' }}
                     transition="all 0.3s ease-in-out"
                     border="1px solid"
                     borderColor="brand.200"
-                    borderRadius="0"
+                    borderRadius="15px"
                     fontFamily="'Pages Grotesque', sans-serif"
                   >
                     Inscrever-se
@@ -191,9 +191,3 @@ const Home = () => {
 };
 
 export default Home;
-
-
-//     font-size: 40px;
-//     font-family: sans-serif;
-//     text-transform: uppercase;
-// .css-1ofqbo3 
